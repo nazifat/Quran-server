@@ -8,10 +8,10 @@ export default async function handler(req, res) {
       total_amount: amount,
       currency: 'BDT',
       tran_id: 'QURAN_' + Date.now(), // unique transaction id
-      success_url: 'https://quran-mazeed.netlify.app/success',
-      fail_url: 'https://quran-mazeed.netlify.app/fail',
-      cancel_url: 'https://quran-mazeed.netlify.app/cancel',
-    //   ipn_url: 'https://your-backend.vercel.app/api/ipn', // optional
+      success_url: 'https://your-frontend.netlify.app/success',
+      fail_url: 'https://your-frontend.netlify.app/fail',
+      cancel_url: 'https://your-frontend.netlify.app/cancel',
+      ipn_url: 'https://your-backend.vercel.app/api/ipn', // optional
 
       shipping_method: 'No',
       product_name: 'Donation',

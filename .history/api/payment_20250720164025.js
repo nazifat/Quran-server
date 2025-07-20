@@ -2,12 +2,12 @@ import SSLCommerzPayment from 'sslcommerz-lts';
 
 export default async function handler(req, res) {
     // Allow CORS for your frontend domain
-    // const allowedOrigins = ['https://quran-mazeed.netlify.app', 'http://localhost:5173'];
-    // const origin = req.headers.origin;
+    const allowedOrigins = ['https://quran-mazeed.netlify.app', 'http://localhost:5173'];
+    const origin = req.headers.origin;
 
-    // if (allowedOrigins.includes(origin)) {
-    //     res.setHeader('Access-Control-Allow-Origin', origin);
-    // }
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
         res.setHeader('Access-Control-Allow-Origin', '*');
 
 

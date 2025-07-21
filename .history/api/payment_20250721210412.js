@@ -1,15 +1,26 @@
 import SSLCommerzPayment from 'sslcommerz-lts';
 
+const cors = require('cors');
+
+const allowedOrigins = ['https://quran-mazeed.netlify.app']; // Your frontend
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST'], // Add others if needed
+  credentials: true // Optional: if you're using cookies/auth headers
+}));
+
 export default async function handler(req, res) {
-    // ✅ Set CORS headers always
+    // Allow CORS for your frontend domain
     res.setHeader("Access-Control-Allow-Origin", "https://quran-mazeed.netlify.app");
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-    // ✅ Handle preflight request properly
+
+
+    // Handle preflight OPTIONS request
     if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
+        return res.status(200).end();
     }
 
     if (req.method === 'POST') {
@@ -22,14 +33,17 @@ export default async function handler(req, res) {
             success_url: 'https://quran-mazeed.netlify.app/success',
             fail_url: 'https://quran-mazeed.netlify.app/fail',
             cancel_url: 'https://quran-mazeed.netlify.app/cancel',
+            //   ipn_url: 'https://your-backend.vercel.app/api/ipn', // optional
 
             shipping_method: 'No',
             product_name: 'Donation',
             product_category: 'Donation',
             product_profile: 'general',
 
+
             cus_name: customerName || "Anonymous",
             cus_email: customerEmail || "no-reply@example.com",
+
             cus_add1: 'Dhaka',
             cus_city: 'Dhaka',
             cus_postcode: '1000',
@@ -43,7 +57,7 @@ export default async function handler(req, res) {
             const apiResponse = await sslcz.init(data);
             return res.status(200).json({ url: apiResponse.GatewayPageURL });
         } catch (err) {
-            console.error("SSLCommerz Error:", err);
+            console.error(err);
             return res.status(500).json({ error: 'Payment initiation failed' });
         }
     } else {
